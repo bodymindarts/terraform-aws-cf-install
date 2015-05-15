@@ -148,6 +148,9 @@ fi
 # bosh-bootstrap handles provisioning the microbosh machine and installing bosh
 # on it. This is very nice of bosh-bootstrap. Everyone make sure to thank bosh-bootstrap
 mkdir -p {bin,workspace/deployments/microbosh,workspace/tools}
+
+wget https://d26ekeud912fhb.cloudfront.net/bosh-stemcell/aws/light-bosh-stemcell-2989-aws-xen-ubuntu-trusty-go_agent.tgz -O /home/ubuntu/light-bosh-stemcell-2989-aws-xen-ubuntu-trusty-go_agent.tgz
+
 pushd workspace/deployments
 pushd microbosh
 create_settings_yml() {
@@ -155,6 +158,7 @@ cat <<EOF > settings.yml
 ---
 bosh:
   name: bosh-${VPC}
+  stemcell_path: /home/ubuntu/light-bosh-stemcell-2989-aws-xen-ubuntu-trusty-go_agent.tgz
 provider:
   name: aws
   credentials:
@@ -207,7 +211,7 @@ popd
 # may change in the future if we come up with a better way to handle maintaining
 # configs in a git repo
 if [[ ! -d "$HOME/workspace/deployments/cf-boshworkspace" ]]; then
-  git clone --branch  ${CF_BOSHWORKSPACE_VERSION} http://github.com/cloudfoundry-community/cf-boshworkspace
+  git clone --branch  ${CF_BOSHWORKSPACE_VERSION} http://github.com/trustedanalytics/cf-boshworkspace
 fi
 pushd cf-boshworkspace
 mkdir -p ssh
@@ -225,7 +229,7 @@ fi
 
 echo "Install Traveling CF"
 if [[ "$(cat $HOME/.bashrc | grep 'export PATH=$PATH:$HOME/bin/traveling-cf-admin')" == "" ]]; then
-  curl -s https://raw.githubusercontent.com/cloudfoundry-community/traveling-cf-admin/master/scripts/installer | bash
+  curl -s https://raw.githubusercontent.com/trustedanalytics/traveling-cf-admin/master/scripts/installer | bash
   echo 'export PATH=$PATH:$HOME/bin/traveling-cf-admin' >> $HOME/.bashrc
   source $HOME/.bashrc
 fi
@@ -247,6 +251,8 @@ fi
   -e "s/CF_SUBNET2/${CF_SUBNET2}/g" \
   -e "s/LB_SUBNET1/${LB_SUBNET1}/g" \
   -e "s/DIRECTOR_UUID/${DIRECTOR_UUID}/g" \
+  -e "s/run.CF_DOMAIN/${CF_DOMAIN}/g" \
+  -e "s/apps.CF_DOMAIN/${CF_DOMAIN}/g" \
   -e "s/CF_DOMAIN/${CF_DOMAIN}/g" \
   -e "s/CF_ADMIN_PASS/${CF_ADMIN_PASS}/g" \
   -e "s/IPMASK/${IPMASK}/g" \
@@ -321,7 +327,7 @@ if [[ $INSTALL_DOCKER == "true" ]]; then
 
   cd ~/workspace/deployments
   if [[ ! -d "$HOME/workspace/deployments/docker-services-boshworkspace" ]]; then
-    git clone https://github.com/cloudfoundry-community/docker-services-boshworkspace.git
+    git clone https://github.com/trustedanalytics/docker-services-boshworkspace.git
   fi
 
   echo "Update the docker-aws-vpc.yml with cf-boshworkspace parameters"

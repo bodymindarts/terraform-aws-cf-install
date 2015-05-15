@@ -17,6 +17,7 @@ variable "cf1_az" {
         ap-northeast-1 = "ap-northeast-1a"
         ap-southeast-1 = "ap-southeast-1a"
         ap-southeast-2 = "ap-southeast-2a"
+        eu-central-1 = "eu-central-1a"
         eu-west-1 = "eu-west-1a"
         sa-east-1 = "sa-east-1a"
     }
@@ -30,6 +31,7 @@ variable "cf2_az" {
         ap-northeast-1 = "ap-northeast-1b"
         ap-southeast-1 = "ap-southeast-1b"
         ap-southeast-2 = "ap-southeast-2b"
+        eu-central-1 = "eu-central-1b"
         eu-west-1 = "eu-west-1b"
         sa-east-1 = "sa-east-1b"
     }
@@ -43,9 +45,7 @@ variable "debug" {
   default = "false"
 }
 
-variable "cf_admin_pass" {
-  default = "c1oudc0wc1oudc0w"
-}
+variable "cf_admin_pass" {}
 
 variable "cf_domain" {
   default = "XIP"
@@ -71,6 +71,7 @@ variable "aws_centos_ami" {
         ap-northeast-1 = "ami-9392dc92"
         ap-southeast-1 = "ami-dcbeed8e"
         ap-southeast-2 = "ami-89e88db3"
+        eu-central-1 = "ami-e4d6ecf9"
         eu-west-1 = "ami-af6faad8"
         sa-east-1 = "ami-73ee416e"
     }
@@ -84,9 +85,15 @@ variable "aws_ubuntu_ami" {
         ap-northeast-1 = "ami-df4b60de"
         ap-southeast-1 = "ami-2ce7c07e"
         ap-southeast-2 = "ami-1f117325"
+        eu-central-1 = "ami-423c0a5f"
         eu-west-1 = "ami-f6b11181"
         sa-east-1 = "ami-71d2676c"
     }
+}
+
+# tag values, key order: Project,IAP,Environment
+variable "aws_tags" {
+  default = "Foo Bar,00000,Development"
 }
 
 variable "deployment_size" {
