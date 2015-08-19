@@ -36,6 +36,7 @@ CF_RELEASE_VERSION=${22}
 DEBUG=${23}
 PRIVATE_DOMAINS=${24}
 CF_SG_ALLOWS=${25}
+ENV_NAME=${26}
 
 BACKBONE_Z1_COUNT=COUNT
 API_Z1_COUNT=COUNT
@@ -258,6 +259,7 @@ fi
   -e "s/IPMASK/${IPMASK}/g" \
   -e "s/CF_SG/${CF_SG}/g" \
   -e "s/LB_SUBNET1_AZ/${CF_SUBNET1_AZ}/g" \
+  -e "s/ENV_NAME/${ENV_NAME}/g" \
   -e "s/version: \+[0-9]\+ \+# DEFAULT_CF_RELEASE_VERSION/version: ${CF_RELEASE_VERSION}/g" \
   -e "s/backbone_z1:\( \+\)[0-9\.]\+\(.*# MARKER_FOR_PROVISION.*\)/backbone_z1:\1${BACKBONE_Z1_COUNT}\2/" \
   -e "s/api_z1:\( \+\)[0-9\.]\+\(.*# MARKER_FOR_PROVISION.*\)/api_z1:\1${API_Z1_COUNT}\2/" \
@@ -335,6 +337,7 @@ if [[ $INSTALL_DOCKER == "true" ]]; then
   dockerDeploymentManifest="/home/ubuntu/workspace/deployments/docker-services-boshworkspace/deployments/docker-aws-vpc.yml"
   /bin/sed -i \
     -e "s/SUBNET_ID/${DOCKER_SUBNET}/g" \
+    -e "s/ENV_NAME/${ENV_NAME}/g" \
     -e "s/DOCKER_SG/${CF_SG}/g" \
     "${dockerDeploymentManifest}"
 
