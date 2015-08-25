@@ -134,10 +134,10 @@ variable health_z1_count {
 }
 variable runner_z1_count {
     default = {
-        small  = "1"
-        med    = "2"
-        med-ha = "1"
-        big-ha = "3"
+        small  = "3"
+        med    = "4"
+        med-ha = "5"
+        big-ha = "6"
     }
 }
 
