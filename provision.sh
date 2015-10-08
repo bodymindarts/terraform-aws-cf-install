@@ -37,6 +37,7 @@ DEBUG=${23}
 PRIVATE_DOMAINS=${24}
 CF_SG_ALLOWS=${25}
 ENV_NAME=${26}
+CONSUL_MASTERS=${27}
 
 BACKBONE_Z1_COUNT=COUNT
 API_Z1_COUNT=COUNT
@@ -256,6 +257,8 @@ fi
   -e "s/apps.CF_DOMAIN/${CF_DOMAIN}/g" \
   -e "s/CF_DOMAIN/${CF_DOMAIN}/g" \
   -e "s/CF_ADMIN_PASS/${CF_ADMIN_PASS}/g" \
+  -e "s|\(dns:\).*|\1 [${CONSUL_MASTERS}]|" \
+  -e "/- IPMASK.0.2/d" \
   -e "s/IPMASK/${IPMASK}/g" \
   -e "s/CF_SG/${CF_SG}/g" \
   -e "s/LB_SUBNET1_AZ/${CF_SUBNET1_AZ}/g" \
