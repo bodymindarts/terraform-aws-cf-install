@@ -38,6 +38,9 @@ PRIVATE_DOMAINS=${24}
 CF_SG_ALLOWS=${25}
 ENV_NAME=${26}
 CONSUL_MASTERS=${27}
+INSTALL_LOGSEARCH=${28}
+LS_SUBNET1=${29}
+LS_SUBNET_AZ=${30}
 
 BACKBONE_Z1_COUNT=COUNT
 API_Z1_COUNT=COUNT
@@ -353,6 +356,40 @@ if [[ $INSTALL_DOCKER == "true" ]]; then
   do bosh -n deploy
   done
 
+fi
+
+if [[ $INSTALL_LOGSEARCH == "true" ]]; then
+  sudo apt-get install python-jinja2 -y
+
+  cd ~/workspace/deployments
+  if [[ ! -d "$HOME/workspace/deployments/logsearch-workspace" ]]; then
+    git clone https://github.com/trustedanalytics/logsearch-workspace.git
+  fi
+
+  export X_ADMIN_PASS="$CF_ADMIN_PASS"
+  export X_AWS_SUBNET="$LS_SUBNET1"
+  export X_AWS_SG="$CF_SG"
+  export X_AWS_AZ="$LS_SUBNET_AZ"
+  export X_CF_DOMAIN="$CF_DOMAIN"
+  export X_CLIENT_PASS="CF_CLIENT_PASS"
+  export X_DIRECTOR_UUID="$DIRECTOR_UUID"
+
+  cd "$HOME/workspace/deployments/logsearch-workspace"
+  mkdir -p releases
+  if [[ ! -d "releases/logsearch-for-cloudfoundry" ]]; then
+    git clone https://github.com/logsearch/logsearch-for-cloudfoundry.git releases/logsearch-for-cloudfoundry
+  fi
+
+  cd releases/logsearch-for-cloudfoundry
+  bosh upload release releases/logsearch-for-cloudfoundry/logsearch-for-cloudfoundry-7.yml
+  cd ../..
+
+  bosh upload release https://bosh.io/d/github.com/logsearch/logsearch-boshrelease?v=23.0.0
+
+  python generate_template.py manifest-aws.yml.j2
+
+  bosh -d manifest.yml -n deploy
+  bosh -d manifest.yml -n run errand push-kibana
 fi
 
 echo "Provision script completed..."

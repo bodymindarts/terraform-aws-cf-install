@@ -230,3 +230,11 @@ output "private_cf_domains" {
 output "additional_cf_sg_allows" {
   value = "${var.additional_cf_sg_allow_1},${var.additional_cf_sg_allow_2},${var.additional_cf_sg_allow_3},${var.additional_cf_sg_allow_4},${var.additional_cf_sg_allow_5},${module.cf-net.aws_cf_a_cidr},${module.cf-net.aws_cf_b_cidr},${module.cf-net.aws_lb_cidr},${module.cf-net.aws_docker_cidr},${module.cf-net.aws_eip_cf_public_ip}"
 }
+
+output "ls_subnet1" {
+  value = "${module.cf-net.aws_subnet_logsearch_id}"
+}
+
+output "ls_subnet1_az" {
+  value = "${module.cf-net.aws_subnet_logsearch_availability_zone}"
+}
