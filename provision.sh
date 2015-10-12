@@ -114,9 +114,8 @@ source ~/.rvm/environments/default
 source ~/.rvm/scripts/rvm
 
 # Install BOSH CLI, bosh-bootstrap, spiff and other helpful plugins/tools
-gem install fog-aws -v 0.1.1 --no-ri --no-rdoc --quiet
-gem install bundler bosh-bootstrap --no-ri --no-rdoc --quiet
-
+gem install bosh_cli_plugin_micro --version '= 1.3098.0' --no-ri --no-rdoc --quiet 
+gem install bundler bosh-bootstrap --no-ri --no-rdoc --quiet 
 
 # We use fog below, and bosh-bootstrap uses it as well
 cat <<EOF > ~/.fog
