@@ -238,3 +238,7 @@ output "ls_subnet1" {
 output "ls_subnet1_az" {
   value = "${module.cf-net.aws_subnet_logsearch_availability_zone}"
 }
+
+output "aws_security_group_cf_id" {
+  value = "${module.cf-net.aws_security_group_cf_id}"
+}
