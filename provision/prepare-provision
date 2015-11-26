@@ -64,6 +64,7 @@ assure_string_in_file $filename_provision 'CONSUL_MASTERS=${27}' "CONSUL_MASTERS
 assure_string_in_file $filename_provision 'INSTALL_LOGSEARCH=${28}' "INSTALL_LOGSEARCH=\"$(terraform output -state="${state_file}" install_logsearch)\""
 assure_string_in_file $filename_provision 'LS_SUBNET1=${29}' "LS_SUBNET1=\"$(terraform output -state="${state_file}" ls_subnet1)\""
 assure_string_in_file $filename_provision 'LS_SUBNET_AZ=${30}' "LS_SUBNET_AZ=\"$(terraform output -state="${state_file}" ls_subnet1_az)\""
+assure_string_in_file $filename_provision 'CF_CLIENT_PASS=${31}' "CF_CLIENT_PASS=\"$(terraform output -state="${state_file}" cf_client_pass)\""
 
 for job in BACKBONE API SERVICES HEALTH RUNNER; do
 	for zone in Z1 Z2; do

@@ -41,6 +41,8 @@ CONSUL_MASTERS=${27}
 INSTALL_LOGSEARCH=${28}
 LS_SUBNET1=${29}
 LS_SUBNET_AZ=${30}
+CF_CLIENT_PASS=${31}
+
 
 BACKBONE_Z1_COUNT=COUNT
 API_Z1_COUNT=COUNT
@@ -259,6 +261,7 @@ fi
   -e "s/apps.CF_DOMAIN/${CF_DOMAIN}/g" \
   -e "s/CF_DOMAIN/${CF_DOMAIN}/g" \
   -e "s/CF_ADMIN_PASS/${CF_ADMIN_PASS}/g" \
+  -e "s/CF_CLIENT_PASS/${CF_CLIENT_PASS}/g" \
   -e "s|\(dns:\).*|\1 [${CONSUL_MASTERS}]|" \
   -e "/- IPMASK.0.2/d" \
   -e "s/IPMASK/${IPMASK}/g" \
@@ -371,7 +374,7 @@ if [[ $INSTALL_LOGSEARCH == "true" ]]; then
   export X_AWS_SG="$CF_SG"
   export X_AWS_AZ="$LS_SUBNET_AZ"
   export X_CF_DOMAIN="$CF_DOMAIN"
-  export X_CLIENT_PASS="CF_CLIENT_PASS"
+  export X_CLIENT_PASS="$CF_CLIENT_PASS"
   export X_DIRECTOR_UUID="$DIRECTOR_UUID"
 
   cd "$HOME/workspace/deployments/logsearch-workspace"
