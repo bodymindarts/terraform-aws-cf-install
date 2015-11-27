@@ -192,6 +192,8 @@ variable "private_cf_domains" {
     default = ""
 }
 
+variable "offline_java_buildpack" { default = "false" }
+
 variable additional_cf_sg_allow_1 { default = "" }
 variable additional_cf_sg_allow_2 { default = "" }
 variable additional_cf_sg_allow_3 { default = "" }

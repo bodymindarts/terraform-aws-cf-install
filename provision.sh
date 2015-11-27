@@ -42,7 +42,7 @@ INSTALL_LOGSEARCH=${28}
 LS_SUBNET1=${29}
 LS_SUBNET_AZ=${30}
 CF_CLIENT_PASS=${31}
-
+OFFLINE_JAVA_BUILDPACK=${32}
 
 BACKBONE_Z1_COUNT=COUNT
 API_Z1_COUNT=COUNT
@@ -285,6 +285,12 @@ fi
   -e "s/health_z2:\( \+\)[0-9\.]\+\(.*# MARKER_FOR_PROVISION.*\)/health_z2:\1${HEALTH_Z2_COUNT}\2/" \
   -e "s/runner_z2:\( \+\)[0-9\.]\+\(.*# MARKER_FOR_PROVISION.*\)/runner_z2:\1${RUNNER_Z2_COUNT}\2/" \
   deployments/cf-aws-${CF_SIZE}.yml
+
+if [[ $OFFLINE_JAVA_BUILDPACK == "true" ]]; then
+  sed -i\
+    -e "s/^#  - offline-java-buildpack.yml$/  - offline-java-buildpack.yml/" \
+    deployments/cf-aws-${CF_SIZE}.yml
+fi
 
 if [[ -n "$PRIVATE_DOMAINS" ]]; then
   for domain in $(echo $PRIVATE_DOMAINS | tr "," "\n"); do

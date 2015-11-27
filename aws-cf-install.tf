@@ -242,3 +242,7 @@ output "ls_subnet1_az" {
 output "aws_security_group_cf_id" {
   value = "${module.cf-net.aws_security_group_cf_id}"
 }
+
+output "offline_java_buildpack" {
+  value = "${var.offline_java_buildpack}"
+}
