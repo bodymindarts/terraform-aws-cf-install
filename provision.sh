@@ -163,8 +163,6 @@ fi
 # on it. This is very nice of bosh-bootstrap. Everyone make sure to thank bosh-bootstrap
 mkdir -p {bin,workspace/deployments/microbosh,workspace/tools}
 
-wget https://d26ekeud912fhb.cloudfront.net/bosh-stemcell/aws/light-bosh-stemcell-2989-aws-xen-ubuntu-trusty-go_agent.tgz -O /home/ubuntu/light-bosh-stemcell-2989-aws-xen-ubuntu-trusty-go_agent.tgz
-
 pushd workspace/deployments
 pushd microbosh
 create_settings_yml() {
@@ -172,7 +170,6 @@ cat <<EOF > settings.yml
 ---
 bosh:
   name: bosh-${VPC}
-  stemcell_path: /home/ubuntu/light-bosh-stemcell-2989-aws-xen-ubuntu-trusty-go_agent.tgz
 provider:
   name: aws
   credentials:
